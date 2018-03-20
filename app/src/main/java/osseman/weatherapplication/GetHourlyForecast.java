@@ -1,24 +1,10 @@
 package osseman.weatherapplication;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-
-/**
- * Created by osseman on 2018-03-19.
- */
 
 public class GetHourlyForecast extends AsyncTask<Void, Void, String> {
 
@@ -35,55 +21,15 @@ public class GetHourlyForecast extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... endpoint) {
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
-        String response = null;
-
-        try {
-            URL url = new URL (baseUrl + this.endpoint);
-
-            Log.i("url", url.toString());
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
-            InputStream inputStream = urlConnection.getInputStream();
-            if (inputStream == null) {
-                return null;
-            }
-
-            StringBuffer buffer = new StringBuffer();
-            reader = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                buffer.append(line);
-            }
-
-            response = buffer.toString();
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if(urlConnection != null) {
-                urlConnection.disconnect();
-            }
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return response;
+        return BaseApiCaller.makeApiCall(this.endpoint);
     }
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
+        if (s == null) {
+            activity.createToast("Could not connect to API");
+            return;
+        }
         try {
             JSONObject apiData = new JSONObject(s);
             JSONArray hourlyForecast = apiData.getJSONArray("hourly_forecast");
@@ -104,6 +50,7 @@ public class GetHourlyForecast extends AsyncTask<Void, Void, String> {
 
             activity.setHourlyForecast(finalForecast);
         } catch (JSONException e) {
+            activity.createToast("Could not find an hourly forecast");
             e.printStackTrace();
         }
     }

@@ -1,13 +1,18 @@
 package osseman.weatherapplication;
 
-import android.location.LocationListener;
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,12 +32,10 @@ public class MainActivity extends AppCompatActivity {
     public TextView hourCondition0, hourCondition1, hourCondition2, hourCondition3, hourCondition4;
     public TextView hourTemp0, hourTemp1, hourTemp2, hourTemp3, hourTemp4;
     public TextView hourRainProb0, hourRainProb1, hourRainProb2, hourRainProb3, hourRainProb4;
+
+    // Location Variables
     public LocationManager locationManager;
-    public LocationListener locationListener;
-    private String currentCity;
-    private JSONObject currentWeather;
-    private JSONArray hourlyForecast;
-    private JSONArray dailyForecast;
+    private Location location;
 
 
     @Override
@@ -78,12 +81,37 @@ public class MainActivity extends AppCompatActivity {
         hourRainProb3 = (TextView) findViewById(R.id.hourRainProb3);
         hourRainProb4 = (TextView) findViewById(R.id.hourRainProb4);
 
+        // Set up location service
+
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        GpsListener locationListener = new GpsListener(this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED) {
+            Log.d("Check Permisions", "Stuck in persmisions");
+            return;
+        }
+
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                3000, 10, locationListener);
+
+
 
         button = (Button) findViewById(R.id.refreshButton);
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            startPipeLine();
+        } else {
+            createToast("Please enable your GPS");
+        }
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startPipeLine();
+                if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    startPipeLine();
+                } else {
+                    createToast("Please enable your GPS");
+                }
             }
         });
 
@@ -96,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     protected void setCityNameFromCoordinates(String city) {
-        this.city.setText(city);
+        this.city.setText("Today in: " + city);
     }
     
     protected void setHourlyForecast(JSONArray hourlyForecast) throws JSONException {
@@ -143,8 +171,28 @@ public class MainActivity extends AppCompatActivity {
 
     protected void startPipeLine() {
         final MainActivity app = this;
-        final GetCityFromCoordinates getCityFromCoordinates = new GetCityFromCoordinates(app, "geolookup/q/36.368982,127.363029.json");
+        String locationString;
+        // Setting Kaist as base mock location
+        if (location == null) {
+            locationString = "36.368982,127.363029";
+        } else {
+            locationString = Double.toString(this.location.getLatitude()) +
+                    "," +
+                    Double.toString(this.location.getLongitude());
+        }
+
+        final GetCityFromCoordinates getCityFromCoordinates = new GetCityFromCoordinates(app,
+                "geolookup/q/"+ locationString + ".json");
         getCityFromCoordinates.execute();
     }
 
+    public void createToast(String message) {
+        Context context = getApplicationContext();
+        Toast t = Toast.makeText(context, message, Toast.LENGTH_LONG);
+        t.show();
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 }
