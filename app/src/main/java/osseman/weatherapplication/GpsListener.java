@@ -5,9 +5,6 @@ import android.location.LocationListener;
 import android.os.Bundle;
 import android.util.Log;
 
-/**
- * Created by osseman on 2018-03-19.
- */
 
 public class GpsListener implements LocationListener {
 

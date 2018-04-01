@@ -8,8 +8,6 @@ import org.json.JSONObject;
 
 public class GetDailyForecast extends AsyncTask<Void, Void, String> {
 
-    private String baseUrl = "http://api.wunderground.com/api/75efe12cd4f4d763/";
-    private JSONObject response;
     private MainActivity activity;
     private String endpoint;
 
@@ -40,11 +38,13 @@ public class GetDailyForecast extends AsyncTask<Void, Void, String> {
                 String temperature = currentForecast.getJSONObject("high").get("celsius").toString();
                 String condition = currentForecast.get("conditions").toString();
                 String rainProb = currentForecast.get("pop").toString();
+                String icon = currentForecast.get("icon").toString();
                 JSONObject filteredForecast = new JSONObject();
                 filteredForecast.put("day", day);
                 filteredForecast.put("temperature", temperature);
                 filteredForecast.put("condition", condition);
                 filteredForecast.put("rainProb", rainProb);
+                filteredForecast.put("icon", icon);
                 finalForecast.put(filteredForecast);
             }
             JSONObject currentRainProb = new JSONObject();

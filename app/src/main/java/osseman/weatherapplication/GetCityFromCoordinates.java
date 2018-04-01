@@ -34,12 +34,13 @@ public class GetCityFromCoordinates extends AsyncTask<Void, Void, String> {
             JSONObject apiData = new JSONObject(s);
             Log.i("Response from get city", apiData.toString());
             String city = apiData.getJSONObject("location").get("city").toString();
+            String cityCode = apiData.getJSONObject("location").get("l").toString();
             activity.setCityNameFromCoordinates(city);
 
             // Fire the rest of the requests as we now know the city
-            final GetCurrentCityWeather getCurrentCityWeather = new GetCurrentCityWeather(activity, "conditions/q/30/" + city + ".json");
-            final GetHourlyForecast getHourlyForecast = new GetHourlyForecast(activity, "hourly/q/30/" + city + ".json");
-            final GetDailyForecast getDailyForecast = new GetDailyForecast(activity, "forecast/q/30/" + city + ".json");
+            final GetCurrentCityWeather getCurrentCityWeather = new GetCurrentCityWeather(activity, "conditions" + cityCode + ".json");
+            final GetHourlyForecast getHourlyForecast = new GetHourlyForecast(activity, "hourly" + cityCode + ".json");
+            final GetDailyForecast getDailyForecast = new GetDailyForecast(activity, "forecast" + cityCode + ".json");
             getCurrentCityWeather.execute();
             getHourlyForecast.execute();
             getDailyForecast.execute();

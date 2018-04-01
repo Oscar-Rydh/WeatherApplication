@@ -3,14 +3,17 @@ package osseman.weatherapplication;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.Image;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,14 +27,17 @@ public class MainActivity extends AppCompatActivity {
     public Button button;
     // Current Weather
     public TextView city, currentTemperature, currentRainProb, currentConditions;
+    public ImageView iconMain;
     //Daily Forecast
     public TextView day0, day1, day2, condition0, condition1, condition2, temp0, temp1, temp2;
     public TextView rainProb0, rainProb1, rainProb2;
+    public ImageView icon0, icon1, icon2;
     //Hourly Forecast
     public TextView hour0, hour1, hour2, hour3, hour4;
     public TextView hourCondition0, hourCondition1, hourCondition2, hourCondition3, hourCondition4;
     public TextView hourTemp0, hourTemp1, hourTemp2, hourTemp3, hourTemp4;
     public TextView hourRainProb0, hourRainProb1, hourRainProb2, hourRainProb3, hourRainProb4;
+    public ImageView hourIcon0, hourIcon1, hourIcon2, hourIcon3, hourIcon4;
 
     // Location Variables
     public LocationManager locationManager;
@@ -48,12 +54,16 @@ public class MainActivity extends AppCompatActivity {
         currentTemperature = (TextView) findViewById(R.id.currentTemp);
         currentConditions = (TextView) findViewById(R.id.currentCond);
         currentRainProb = (TextView) findViewById(R.id.currentRainProb);
+        iconMain = (ImageView) findViewById(R.id.iconMain);
         day0 = (TextView) findViewById(R.id.day0);
         day1 = (TextView) findViewById(R.id.day1);
         day2 = (TextView) findViewById(R.id.day2);
         condition0 = (TextView) findViewById(R.id.condition0);
         condition1 = (TextView) findViewById(R.id.condition1);
         condition2 = (TextView) findViewById(R.id.condition2);
+        icon0 = (ImageView) findViewById(R.id.icon0);
+        icon1 = (ImageView) findViewById(R.id.icon1);
+        icon2 = (ImageView) findViewById(R.id.icon2);
         temp0 = (TextView) findViewById(R.id.temp0);
         temp1 = (TextView) findViewById(R.id.temp1);
         temp2 = (TextView) findViewById(R.id.temp2);
@@ -80,6 +90,11 @@ public class MainActivity extends AppCompatActivity {
         hourRainProb2 = (TextView) findViewById(R.id.hourRainProb2);
         hourRainProb3 = (TextView) findViewById(R.id.hourRainProb3);
         hourRainProb4 = (TextView) findViewById(R.id.hourRainProb4);
+        hourIcon0 = (ImageView) findViewById(R.id.hourIcon0);
+        hourIcon1 = (ImageView) findViewById(R.id.hourIcon1);
+        hourIcon2 = (ImageView) findViewById(R.id.hourIcon2);
+        hourIcon3 = (ImageView) findViewById(R.id.hourIcon3);
+        hourIcon4 = (ImageView) findViewById(R.id.hourIcon4);
 
         // Set up location service
 
@@ -121,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Json", currentWeather.toString());
         this.currentTemperature.setText(currentWeather.get("temperature").toString() + " C");
         this.currentConditions.setText(currentWeather.get("conditions").toString());
+        this.iconMain.setImageResource(getImageId(currentWeather.get("icon").toString()));
 
     }
     protected void setCityNameFromCoordinates(String city) {
@@ -148,6 +164,11 @@ public class MainActivity extends AppCompatActivity {
         hourRainProb2.setText(hourlyForecast.getJSONObject(2).get("rainProb").toString() + "%");
         hourRainProb3.setText(hourlyForecast.getJSONObject(3).get("rainProb").toString() + "%");
         hourRainProb4.setText(hourlyForecast.getJSONObject(4).get("rainProb").toString() + "%");
+        hourIcon0.setImageResource(getImageId(hourlyForecast.getJSONObject(0).get("icon").toString()));
+        hourIcon1.setImageResource(getImageId(hourlyForecast.getJSONObject(1).get("icon").toString()));
+        hourIcon2.setImageResource(getImageId(hourlyForecast.getJSONObject(2).get("icon").toString()));
+        hourIcon3.setImageResource(getImageId(hourlyForecast.getJSONObject(3).get("icon").toString()));
+        hourIcon4.setImageResource(getImageId(hourlyForecast.getJSONObject(4).get("icon").toString()));
         Log.d("Forecast", "The Hourly forecast is: " + hourlyForecast.toString());
     }
 
@@ -165,8 +186,18 @@ public class MainActivity extends AppCompatActivity {
         rainProb1.setText(dailyForecast.getJSONObject(1).get("rainProb").toString() + "%");
         rainProb2.setText(dailyForecast.getJSONObject(2).get("rainProb").toString() + "%");
         currentRainProb.setText(dailyForecast.getJSONObject(3).get("currentRainProb").toString() + "%");
+        icon0.setImageResource(getImageId(dailyForecast.getJSONObject(0).get("icon").toString()));
+        icon1.setImageResource(getImageId(dailyForecast.getJSONObject(1).get("icon").toString()));
+        icon2.setImageResource(getImageId(dailyForecast.getJSONObject(2).get("icon").toString()));
+
 
         Log.d("Forecast", "The Daily forecast is: " + dailyForecast.toString());
+    }
+
+    public int getImageId(String name) {
+        Context c = MainActivity.this;
+        c.getApplicationContext();
+        return c.getResources().getIdentifier(name, "drawable", c.getPackageName());
     }
 
     protected void startPipeLine() {
@@ -191,6 +222,7 @@ public class MainActivity extends AppCompatActivity {
         Toast t = Toast.makeText(context, message, Toast.LENGTH_LONG);
         t.show();
     }
+
 
     public void setLocation(Location location) {
         this.location = location;

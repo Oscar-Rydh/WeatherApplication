@@ -4,22 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="osseman.weatherapplication.MainActivity"
-    tools:layout_editor_absoluteY="81dp"
-    tools:layout_editor_absoluteX="0dp"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="osseman.weatherapplication.MainActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
 
     <TextView
         android:id="@+id/city"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="City"
-        android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
+        android:text="City"
         android:textSize="18sp"
         android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/iconMain"
+        android:layout_width="62dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        app:srcCompat="@android:drawable/btn_dialog" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -96,8 +103,8 @@
         android:id="@+id/textView98"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="3-Day Forecast"
         android:layout_marginTop="10dp"
+        android:text="3-Day Forecast"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -118,21 +125,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/day1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/day2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
     </LinearLayout>
 
     <LinearLayout
@@ -152,21 +162,58 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/condition1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/condition2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/conditionIconDecsc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Icon:" />
+
+        <ImageView
+            android:id="@+id/icon0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/btn_dialog" />
+
+        <ImageView
+            android:id="@+id/icon1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/btn_dialog" />
+
+        <ImageView
+            android:id="@+id/icon2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/btn_dialog" />
     </LinearLayout>
 
     <LinearLayout
@@ -186,21 +233,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/temp1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/temp2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
     </LinearLayout>
 
     <LinearLayout
@@ -220,29 +270,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/rainProb1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/rainProb2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/textView111"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="5-Hourly Forecast"
         android:layout_marginTop="10dp"
+        android:text="5-Hourly Forecast"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -263,35 +316,40 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/hour1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/hour2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/hour3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/hour4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
     </LinearLayout>
 
@@ -312,35 +370,90 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/hourCondition1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/hourCondition2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/hourCondition3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/hourCondition4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/hourIconDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Icon" />
+
+        <ImageView
+            android:id="@+id/hourIcon0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/btn_dialog" />
+
+        <ImageView
+            android:id="@+id/hourIcon1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/btn_dialog" />
+
+        <ImageView
+            android:id="@+id/hourIcon2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/btn_dialog" />
+
+        <ImageView
+            android:id="@+id/hourIcon3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/btn_dialog" />
+
+        <ImageView
+            android:id="@+id/hourIcon4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/btn_dialog" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -360,35 +473,40 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/hourTemp1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/hourTemp2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/hourTemp3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/hourTemp4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
     </LinearLayout>
 
     <LinearLayout
@@ -408,35 +526,40 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/hourRainProb1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/hourRainProb2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/hourRainProb3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/hourRainProb4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="-"
+            android:textAlignment="center" />
     </LinearLayout>
 
 

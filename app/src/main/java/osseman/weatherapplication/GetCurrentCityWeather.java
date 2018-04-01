@@ -8,8 +8,6 @@ import org.json.JSONObject;
 
 public class GetCurrentCityWeather extends AsyncTask<Void, Void, String> {
 
-    private String baseUrl = "http://api.wunderground.com/api/75efe12cd4f4d763/";
-    private JSONObject response;
     private MainActivity activity;
     private String endpoint;
 
@@ -34,9 +32,11 @@ public class GetCurrentCityWeather extends AsyncTask<Void, Void, String> {
             JSONObject apiData = new JSONObject(s);
             String temperature = apiData.getJSONObject("current_observation").getString("temp_c");
             String conditions = apiData.getJSONObject("current_observation").getString("weather");
+            String icon = apiData.getJSONObject("current_observation").getString("icon");
             JSONObject filteredData = new JSONObject();
             filteredData.put("temperature", temperature);
             filteredData.put("conditions", conditions);
+            filteredData.put("icon", icon);
             activity.setCurrentWeather(filteredData);
         } catch (JSONException e) {
             activity.createToast("Could not find any current weather conditions");
